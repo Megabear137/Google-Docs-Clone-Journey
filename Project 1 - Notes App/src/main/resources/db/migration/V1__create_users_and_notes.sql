@@ -1,0 +1,20 @@
+BEGIN TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS users (
+    "id" BIGSERIAL PRIMARY KEY ,
+    "email" TEXT UNIQUE NOT NULL,
+    "password_hash" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS notes (
+   "id" BIGSERIAL PRIMARY KEY,
+   "owner_id" BIGINT NOT NULL REFERENCES users(id),
+   "title" TEXT NOT NULL,
+   "body" TEXT NOT NULL,
+   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+COMMIT;
