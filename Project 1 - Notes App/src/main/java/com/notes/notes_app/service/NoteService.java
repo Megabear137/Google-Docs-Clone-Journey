@@ -5,10 +5,10 @@ import com.notes.notes_app.dto.NoteResponse;
 import com.notes.notes_app.dto.NoteUpdateRequest;
 import com.notes.notes_app.entity.Note;
 import com.notes.notes_app.entity.User;
+import com.notes.notes_app.exception.NoteNotFoundException;
 import com.notes.notes_app.repository.NoteRepository;
 import com.notes.notes_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -38,15 +38,15 @@ public class NoteService {
         if(note.isPresent() && note.get().getOwner().getId().equals(ownerId)) {
             return NoteResponse.from(note.get());
         }
-        throw new RuntimeException("Note not Found");
+        throw new NoteNotFoundException(id);
     }
 
-    public void delete(Long id, Long ownerId) {
+    public void delete(Long ownerId, Long id) {
         Optional<Note> note = noteRepository.findById(id);
         if(note.isPresent() && note.get().getOwner().getId().equals(ownerId)) {
             noteRepository.delete(note.get());
         }
-        else throw new RuntimeException("Note not Found");
+        else throw new NoteNotFoundException(id);
     }
 
     public NoteResponse update(Long ownerId, Long id, NoteUpdateRequest request) {
@@ -61,7 +61,7 @@ public class NoteService {
             Note saved = noteRepository.save(foundNote);
             return NoteResponse.from(saved);
         }
-        else throw new RuntimeException("Note not Found");
+        else throw new NoteNotFoundException(id);
     }
 
     public NoteResponse create(Long ownerId, NoteCreateRequest request) {
@@ -72,6 +72,8 @@ public class NoteService {
         note.setOwner(owner);
         note.setTitle(request.title());
         note.setBody(request.body());
+        note.setCreatedAt(Instant.now());
+        note.setUpdatedAt(Instant.now());
 
         Note saved = noteRepository.save(note);
         return NoteResponse.from(saved);
