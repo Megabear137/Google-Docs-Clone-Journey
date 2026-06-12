@@ -1,13 +1,13 @@
-package com.notes.notes_app.service;
+package com.notes.notes_app.database_tier.service;
 
-import com.notes.notes_app.dto.NoteCreateRequest;
-import com.notes.notes_app.dto.NoteResponse;
-import com.notes.notes_app.dto.NoteUpdateRequest;
-import com.notes.notes_app.entity.Note;
-import com.notes.notes_app.entity.User;
-import com.notes.notes_app.exception.NoteNotFoundException;
-import com.notes.notes_app.repository.NoteRepository;
-import com.notes.notes_app.repository.UserRepository;
+import com.notes.notes_app.database_tier.dto.NoteCreateRequest;
+import com.notes.notes_app.database_tier.dto.NoteResponse;
+import com.notes.notes_app.database_tier.dto.NoteUpdateRequest;
+import com.notes.notes_app.database_tier.entity.Note;
+import com.notes.notes_app.database_tier.entity.User;
+import com.notes.notes_app.database_tier.exception.NoteNotFoundException;
+import com.notes.notes_app.database_tier.repository.NoteRepository;
+import com.notes.notes_app.database_tier.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;

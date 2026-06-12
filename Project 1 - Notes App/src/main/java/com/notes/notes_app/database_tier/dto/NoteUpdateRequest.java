@@ -1,8 +1,8 @@
-package com.notes.notes_app.dto;
+package com.notes.notes_app.database_tier.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record NoteCreateRequest(
+public record NoteUpdateRequest(
         @NotBlank String title,
         @NotBlank String body) {
 

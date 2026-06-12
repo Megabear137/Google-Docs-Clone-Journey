@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 application-prod.yaml
+application.yaml
 *.env
 
 ### STS ###

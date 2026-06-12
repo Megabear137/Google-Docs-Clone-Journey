@@ -1,6 +1,6 @@
-package com.notes.notes_app.dto;
+package com.notes.notes_app.database_tier.dto;
 
-import com.notes.notes_app.entity.Note;
+import com.notes.notes_app.database_tier.entity.Note;
 import java.time.Instant;
 
 public record NoteResponse(Long id, String title, String body, Instant updatedAt) {
