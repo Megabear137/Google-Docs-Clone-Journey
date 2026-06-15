@@ -1,4 +1,4 @@
-package com.notes.notes_app.database_tier.dto;
+package com.notes.notes_app.database_tier.dto.note;
 
 import com.notes.notes_app.database_tier.entity.Note;
 import java.time.Instant;

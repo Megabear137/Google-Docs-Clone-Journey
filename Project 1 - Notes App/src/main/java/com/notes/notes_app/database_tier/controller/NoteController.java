@@ -1,8 +1,8 @@
 package com.notes.notes_app.database_tier.controller;
 
-import com.notes.notes_app.database_tier.dto.NoteCreateRequest;
-import com.notes.notes_app.database_tier.dto.NoteResponse;
-import com.notes.notes_app.database_tier.dto.NoteUpdateRequest;
+import com.notes.notes_app.database_tier.dto.note.NoteCreateRequest;
+import com.notes.notes_app.database_tier.dto.note.NoteResponse;
+import com.notes.notes_app.database_tier.dto.note.NoteUpdateRequest;
 import com.notes.notes_app.database_tier.service.NoteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

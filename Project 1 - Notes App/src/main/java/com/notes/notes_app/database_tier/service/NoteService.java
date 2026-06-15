@@ -1,8 +1,8 @@
 package com.notes.notes_app.database_tier.service;
 
-import com.notes.notes_app.database_tier.dto.NoteCreateRequest;
-import com.notes.notes_app.database_tier.dto.NoteResponse;
-import com.notes.notes_app.database_tier.dto.NoteUpdateRequest;
+import com.notes.notes_app.database_tier.dto.note.NoteCreateRequest;
+import com.notes.notes_app.database_tier.dto.note.NoteResponse;
+import com.notes.notes_app.database_tier.dto.note.NoteUpdateRequest;
 import com.notes.notes_app.database_tier.entity.Note;
 import com.notes.notes_app.database_tier.entity.User;
 import com.notes.notes_app.database_tier.exception.NoteNotFoundException;

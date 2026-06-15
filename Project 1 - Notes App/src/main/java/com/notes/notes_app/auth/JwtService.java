@@ -1,8 +1,15 @@
 package com.notes.notes_app.auth;
 
 import com.notes.notes_app.auth.config.JwtProperties;
+import org.springframework.security.oauth2.jose.jws.JwsAlgorithm;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.JwsHeader;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 
 @Service
 public class JwtService {
@@ -16,6 +23,25 @@ public class JwtService {
     }
 
     public String issueToken(Long userId) {
-        return ""; //TODO
+
+        Instant now = Instant.now();
+        Instant exp = now.plusMillis(expirationMs);
+
+        JwsAlgorithm alg = MacAlgorithm.HS256;
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .subject(userId.toString())
+                .issuedAt(now)
+                .expiresAt(exp)
+                .build();
+
+        JwsHeader header = JwsHeader.with(alg).build();
+
+        JwtEncoderParameters params = JwtEncoderParameters.from(
+                header,
+                claims
+        );
+
+        return encoder.encode(params).getTokenValue();
     }
 }
