@@ -1,0 +1,6 @@
+BEGIN TRANSACTION;
+
+DELETE FROM notes WHERE owner_id = 1;
+DELETE FROM users WHERE id = 1;
+
+COMMIT;

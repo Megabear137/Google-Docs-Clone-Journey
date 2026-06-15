@@ -6,6 +6,8 @@ import com.notes.notes_app.database_tier.dto.note.NoteUpdateRequest;
 import com.notes.notes_app.database_tier.service.NoteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,34 +23,39 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<NoteResponse> list() {
-        Long ownerId = 1L; // TODO: replace with authenticated
+    public List<NoteResponse> list(@AuthenticationPrincipal Jwt jwt) {
+        Long ownerId = Long.parseLong(jwt.getSubject());
         return service.list(ownerId);
     }
 
     @GetMapping("/{id}")
-    public NoteResponse get(@PathVariable Long id) {
-        Long ownerId = 1L; // TODO: replace with authenticated
+    public NoteResponse get(@PathVariable Long id,
+                            @AuthenticationPrincipal Jwt jwt) {
+        Long ownerId = Long.parseLong(jwt.getSubject());
         return service.get(ownerId, id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public NoteResponse create(@Valid @RequestBody NoteCreateRequest request) {
-        Long ownerId = 1L; // TODO: replace with authenticated
+    public NoteResponse create(@Valid @RequestBody NoteCreateRequest request,
+                               @AuthenticationPrincipal Jwt jwt) {
+        Long ownerId = Long.parseLong(jwt.getSubject());
         return service.create(ownerId, request);
     }
 
     @PutMapping("/{id}")
-    public NoteResponse update(@Valid @RequestBody NoteUpdateRequest request, @PathVariable Long id){
-        Long ownerId = 1L; // TODO: replace with authenticated
+    public NoteResponse update(@Valid @RequestBody NoteUpdateRequest request,
+                               @PathVariable Long id,
+                               @AuthenticationPrincipal Jwt jwt){
+        Long ownerId = Long.parseLong(jwt.getSubject());
         return service.update(ownerId, id, request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        Long ownerId = 1L; // TODO: replace with authenticated
+    public void delete(@PathVariable Long id,
+                       @AuthenticationPrincipal Jwt jwt) {
+        Long ownerId = Long.parseLong(jwt.getSubject());
         service.delete(ownerId, id);
     }
 
