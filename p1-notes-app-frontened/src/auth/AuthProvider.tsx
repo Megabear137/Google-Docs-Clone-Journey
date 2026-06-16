@@ -6,14 +6,35 @@ import { jwtDecode } from 'jwt-decode'
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider( { children }: {children: ReactNode}) {
-    const [user, setUser] = useState<User | null>(null)
-    const [token, setToken] = useState<string | null>(null)
 
-    useEffect( () => setToken(localStorage.getItem("token")), [])
+    const [token, setToken] = useState<string | null>(
+        () => localStorage.getItem('token')
+    )
+
+    const [user, setUser] = useState<User | null>( () => {
+        const saved = localStorage.getItem("token")
+        if(!saved) return null
+
+        try {
+            
+            const claims = jwtDecode<{sub: string, exp: number}>(saved)
+            // Ensure token is not expired
+            if(claims.exp * 1000 < Date.now()) {
+                localStorage.removeItem('token')
+                return null
+            }
+
+            return {id: Number(claims.sub), email : localStorage.getItem('email') ?? '' }
+
+        } catch {
+            return null
+        }
+    })
 
     async function login(email: string, password: string): Promise<void> {
         const { data } = await apiClient.post('/api/auth/login', { email, password })
         localStorage.setItem('token', data.token)
+        localStorage.setItem('email', data.email)
         setToken(data.token)
 
         const claims = jwtDecode<{ sub: string }>(data.token)
@@ -23,6 +44,7 @@ export function AuthProvider( { children }: {children: ReactNode}) {
     async function register(email: string, password: string): Promise<void> {
         const { data } = await apiClient.post('/api/auth/register', { email, password })
         localStorage.setItem('token', data.token)
+        localStorage.setItem('email', data.email)
         setToken(data.token)
 
         const claims = jwtDecode<{ sub: string }>(data.token)

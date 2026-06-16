@@ -7,8 +7,11 @@ export const apiClient = axios.create({
 
 // Attach the request interceptor: runs before every request leaves.
 apiClient.interceptors.request.use((config) => {
+  const isAuthRoute = config.url?.includes("/api/auth")
   const token = localStorage.getItem('token')
-  if (token) config.headers.Authorization = `Bearer ${token}`
+  if (token && !isAuthRoute) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 })
 

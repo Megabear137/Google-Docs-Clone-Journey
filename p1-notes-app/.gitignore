@@ -6,6 +6,7 @@ target/
 application-prod.yaml
 application.yaml
 *.env
+commands.txt
 
 ### STS ###
 .apt_generated
