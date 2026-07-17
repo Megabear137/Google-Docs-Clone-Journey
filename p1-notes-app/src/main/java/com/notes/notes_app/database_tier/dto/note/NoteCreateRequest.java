@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotBlank;
 
 public record NoteCreateRequest(
         @NotBlank String title,
-        @NotBlank String body) {
+        String body) {
 }

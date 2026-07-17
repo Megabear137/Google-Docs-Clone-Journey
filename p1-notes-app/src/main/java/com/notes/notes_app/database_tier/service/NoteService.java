@@ -11,6 +11,7 @@ import com.notes.notes_app.database_tier.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,9 +26,16 @@ public class NoteService {
         this.userRepository = userRepository;
     }
 
-    public List<NoteResponse> list(Long ownerId) {
-        return noteRepository
-                .findByOwnerId(ownerId)
+    public List<NoteResponse> list(Long ownerId, String search) {
+
+        List<Note> notes;
+
+        if ( search == null || search.isBlank() ) {
+            notes = noteRepository.findByOwnerId(ownerId);
+        } else {
+            notes = noteRepository.findBySearch(ownerId, search);
+        }
+        return notes
                 .stream()
                 .map(NoteResponse::from)
                 .toList();

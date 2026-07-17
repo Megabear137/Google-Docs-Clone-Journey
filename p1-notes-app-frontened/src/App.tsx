@@ -19,6 +19,11 @@ function App() {
           <NotesListPage />
         </ProtectedRoute>
         } />
+      <Route path="/notes/new" element={
+        <ProtectedRoute>
+          <NotePage />
+        </ProtectedRoute>
+        } />
       <Route path="/notes/:id" element={
         <ProtectedRoute>
           <NotePage />
