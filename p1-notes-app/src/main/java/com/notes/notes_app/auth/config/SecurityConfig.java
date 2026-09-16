@@ -56,9 +56,10 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a -> a
                         // Makes these endpoints publicly accessible
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/index.html", "/assets/**").permitAll()
+                        .requestMatchers("api/**").authenticated()
                         // Makes all other endpoints auth protected
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .oauth2ResourceServer(o -> o
                         // Adds out jwtDecoder to the Security Filter Chain
                         .jwt(jwt -> jwt.decoder(decoder)))

@@ -1,0 +1,3 @@
+app:
+  jwt:
+    secret: test-key-that-is-long-enough-to-work-epicly

@@ -22,7 +22,7 @@ export function NotePage() {
   const [tagInput, setTagInput] = useState("")
   const { id } = useParams()
   const navigate = useNavigate()
-  const [isNew, setIsNew] = useState(id == undefined) // Checks if a new note is being made
+  const [isNew] = useState(id == undefined) // Checks if a new note is being made
 
   const bodyRef = useRef<HTMLTextAreaElement>(null)
   
@@ -248,7 +248,7 @@ export function NotePage() {
       <div className="flex justify-center">
         <button className="flex border rounded p-1 justify-center"
                 disabled={isSaving}
-                onClick={ (e) => { saveNote() } }>
+                onClick={ () => { saveNote() } }>
                   {isSaving ? "Saving..." : "Save"}
                   </button>
       </div>

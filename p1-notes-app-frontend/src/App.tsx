@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { Routes, Route, Navigate, useActionData } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { LoginPage } from './pages/LoginPage'
 import { NotesListPage } from './pages/NotesListPage'
 import { RegisterPage } from './pages/RegisterPage'
@@ -8,10 +7,10 @@ import { type ReactNode } from 'react'
 import { useAuth } from './auth/AuthProvider'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/notes" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/notes" element={
@@ -29,6 +28,7 @@ function App() {
           <NotePage />
         </ProtectedRoute>
         } />
+      <Route path="*" element={<Navigate to="/notes" replace />} />
     </Routes>
   )
 }

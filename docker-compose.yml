@@ -11,5 +11,18 @@ services:
     volumes:
       - notes-postgres-data:/var/lib/postgresql/data
 
+  app:
+    build: .
+    container_name: notes_app
+    ports:
+     - "8081:8081"
+    environment:
+      JWT_SECRET: dev-secret-that-is-long-enough-to-work
+      DB_URL: jdbc:postgresql://postgres:5432/notesdb
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    depends_on:
+     - "postgres"
+
 volumes:
   notes-postgres-data:
